@@ -146,18 +146,6 @@
   text-align: center;
 }
 
-.reflection-section::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  bottom: 2rem;
-  width: 120px;
-  height: 120px;
-  background: radial-gradient(circle at 30% 30%, var(--color-tertiary) 0 35%, transparent 36%), radial-gradient(circle at 70% 55%, #a34114 0 32%, transparent 33%), radial-gradient(circle at 40% 80%, #7f2a00 0 28%, transparent 29%);
-  opacity: 0.85;
-  pointer-events: none;
-}
-
 .reflection-inner p {
   font-family: var(--font-h2);
   font-size: clamp(1.2rem, 2.2vw, 2rem);
