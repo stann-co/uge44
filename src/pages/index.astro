@@ -1,17 +1,119 @@
 ---
-
+import "../style/generel.css";
+import "../style/layout.css";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro hello</h1>
-	</body>
+<html lang="da">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>UGE44</title>
+    <meta name="description" content="Uge 44 – en rolig og tryg digital indgang til refleksion og events om liv og død." />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="/" class="logo" aria-label="Gå til forsiden">
+          <span class="logo-mark">⌛</span>
+          <span class="logo-text">UGE44</span>
+        </a>
+
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Åbn menu"> Menu </button>
+
+        <nav id="main-nav" class="main-nav" aria-label="Hovedmenu">
+          <a href="#booking">Booking</a>
+          <a href="#om">Om</a>
+          <a href="#kalender">Kalender</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-content">
+            <p class="eyebrow">UGE44</p>
+            <h1>Vi skal alle dø</h1>
+            <p class="lead">
+              Men vi behøver ikke være bange
+              <br />
+              for at tale om det
+            </p>
+
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#kalender">Se events</a>
+              <a class="btn btn-secondary" href="#om">Om</a>
+            </div>
+          </div>
+
+          <div class="hero-image-wrapper">
+            <img src="/images/elderly-couple.webp" alt="To ældre personer sidder sammen og ser ud over vandet" class="hero-image" width="700" height="520" />
+          </div>
+        </div>
+
+        <img src="/images/tree-left.svg" alt="" class="hero-tree" aria-hidden="true" />
+      </section>
+
+      <section id="kalender" class="events-section">
+        <div class="container">
+          <h2>Find events nær dig</h2>
+
+          <div class="cards">
+            <article class="event-card">
+              <h3>Døden i film</h3>
+              <p class="event-meta">Tirsdag d. 27 maj kl. 19:00<br />i København</p>
+              <p>Se hvordan film skildrer døden og de følelser, der følger med – og tal om det bagefter i et trygt rum.</p>
+              <a href="/event/doden-i-film" class="btn btn-card">Se events</a>
+            </article>
+
+            <article class="event-card">
+              <h3>Kunsten i at miste</h3>
+              <p class="event-meta">Onsdag d. 28 maj kl. 13:00<br />i Odense</p>
+              <p>En udstilling om sorg og savn, hvor kunst åbner op for refleksion og nye perspektiver.</p>
+              <a href="/event/kunsten-i-at-miste" class="btn btn-card">Se events</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="reflection-section">
+        <div class="container reflection-inner">
+          <h2>Hvordan vil du huskes?</h2>
+          <p>Hvad betyder livet for dig?</p>
+          <a href="#booking" class="btn btn-secondary">Start refleksion</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="om">
+      <div class="container footer-inner">
+        <a href="/" class="logo footer-logo" aria-label="Gå til forsiden">
+          <span class="logo-mark">⌛</span>
+          <span class="logo-text">UGE44</span>
+        </a>
+
+        <nav class="footer-nav" aria-label="Footermenu">
+          <a href="#om">Om kampagnen</a>
+          <a href="#booking">Booking</a>
+          <a href="/" aria-label="Facebook">Facebook</a>
+          <a href="/" aria-label="Instagram">Instagram</a>
+        </nav>
+      </div>
+    </footer>
+
+    <script>
+      const toggle = document.querySelector(".menu-toggle");
+      const nav = document.querySelector("#main-nav");
+
+      if (toggle && nav) {
+        toggle.addEventListener("click", () => {
+          const isOpen = toggle.getAttribute("aria-expanded") === "true";
+          toggle.setAttribute("aria-expanded", String(!isOpen));
+          toggle.setAttribute("aria-label", isOpen ? "Åbn menu" : "Luk menu");
+          nav.classList.toggle("is-open");
+        });
+      }
+    </script>
+  </body>
 </html>
