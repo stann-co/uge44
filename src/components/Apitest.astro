@@ -1,0 +1,16 @@
+---
+const url = 'https://hvvxroxpdiaocgyfvvao.supabase.co/rest/v1/'
+
+const options = {
+	headers:{
+		apikey: 'sb_publishable_KjMvgEje7VRri8biX9pcpA_eFJFXyiR',
+
+	}
+}
+
+ const response = await fetch(url+"people",options)
+ const data = await response.json()
+
+---
+<h2>Api test!!!</h2>
+<p>{JSON.stringify(data)}</p>
