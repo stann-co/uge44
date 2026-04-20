@@ -1,0 +1,234 @@
+---
+import "../pages/style/generel.css";
+import "../pages/style/layout.css";
+
+const API_URL = "https://cbrvuyyzawexiapgwjsy.supabase.co/rest/v1/uge_44_begivenheder?select=*";
+
+const API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNicnZ1eXl6YXdleGlhcGd3anN5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzNDY2MzQsImV4cCI6MjA5MTkyMjYzNH0.HdxZ0uTaS1WBOktv6Y_rwMNxeGQLBjeFiUHsyLn1dBs";
+
+let events = [];
+
+try {
+  const response = await fetch(API_URL, {
+    headers: {
+      apikey: API_KEY,
+      Authorization: `Bearer ${API_KEY}`,
+      Accept: "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Kunne ikke hente events");
+  }
+
+  events = await response.json();
+} catch (error) {
+  console.error(error);
+}
+
+events = events.sort((a, b) => {
+  const aDate = new Date(`${a.date}T${a.time}`);
+  const bDate = new Date(`${b.date}T${b.time}`);
+  return aDate - bDate;
+});
+
+function formatDateHeading(dateString) {
+  const date = new Date(dateString);
+  return new Intl.DateTimeFormat("da-DK", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+  }).format(date);
+}
+
+const serializedEvents = JSON.stringify(events);
+---
+
+<html lang="da">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Kalender | UGE44</title>
+    <meta name="description" content="Find events nær dig i UGE44." />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <div class="container header-inner">
+          <a href="/" class="logo" aria-label="Gå til forsiden">
+            <span class="logo-text">UGE<span class="logo-accent">44</span></span>
+          </a>
+
+          <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Åbn menu"> Menu </button>
+
+          <nav id="main-nav" class="main-nav" aria-label="Hovedmenu">
+            <a href="/booking">Booking</a>
+            <a href="/#om">Om</a>
+            <a href="/kalender" class="is-active">Kalender</a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="calendar-page">
+        <section class="calendar-top">
+          <div class="container calendar-top-inner">
+            <div class="calendar-copy">
+              <h1>Kalender</h1>
+              <p class="calendar-subtitle">Find events nær dig</p>
+              <p class="calendar-helper">Vælg den landsdel du ønsker at lede efter U44-events i, ved at klikke på billedet til højre.</p>
+            </div>
+
+            /**** kort ****/
+          </div>
+        </section>
+
+        <section class="calendar-results">
+          <div class="container">
+            <div class="calendar-region-bar">
+              <h2 id="selected-region-title">Alle events</h2>
+              <button id="reset-region" class="region-reset" type="button"> Vis alle </button>
+            </div>
+
+            <div id="events-container"></div>
+
+            <div class="calendar-dots" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </div>
+
+            <div class="calendar-bottom-leaves">
+              <img src="/images/leaves.png" alt="" aria-hidden="true" />
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="container footer-inner">
+          <a href="/" class="logo footer-logo" aria-label="Gå til forsiden">
+            <span class="logo-text">UGE<span class="logo-accent">44</span></span>
+          </a>
+
+          <nav class="footer-nav" aria-label="Footermenu">
+            <a href="/#om">Om kampagnen</a>
+            <a href="/booking">Booking</a>
+            <a href="/" aria-label="Facebook">Facebook</a>
+            <a href="/" aria-label="Instagram">Instagram</a>
+          </nav>
+        </div>
+      </footer>
+    </div>
+
+    <script define:vars={{ events, formatDateHeading }}>
+      const allEvents = events;
+      const eventsContainer = document.getElementById("events-container");
+      const regionTitle = document.getElementById("selected-region-title");
+      const resetButton = document.getElementById("reset-region");
+      const regions = document.querySelectorAll(".map-region");
+
+      function formatDateHeadingClient(dateString) {
+        const date = new Date(dateString);
+        return new Intl.DateTimeFormat("da-DK", {
+          weekday: "long",
+          day: "numeric",
+          month: "long",
+        }).format(date);
+      }
+
+      function formatTime(timeString) {
+        return timeString?.slice(0, 5) ?? "";
+      }
+
+      function groupByDate(events) {
+        return events.reduce((acc, event) => {
+          if (!acc[event.date]) acc[event.date] = [];
+          acc[event.date].push(event);
+          return acc;
+        }, {});
+      }
+
+      function renderEvents(filteredEvents) {
+        if (!filteredEvents.length) {
+          eventsContainer.innerHTML = `<p class="calendar-empty">Ingen events fundet i denne region.</p>`;
+          return;
+        }
+
+        const grouped = groupByDate(filteredEvents);
+
+        eventsContainer.innerHTML = Object.entries(grouped)
+          .map(([date, dayEvents]) => {
+            return `
+              <section class="calendar-day-block">
+                <h3>${formatDateHeadingClient(date)}</h3>
+                <div class="calendar-events-list">
+                  ${dayEvents
+                    .map(
+                      (event) => `
+                        <article class="calendar-event-card">
+                          <div class="calendar-event-left">
+                            <h4>${event.name}</h4>
+                            <p>${formatDateHeadingClient(event.date)} kl. ${formatTime(event.time)} i ${event.address}</p>
+                          </div>
+                          <a href="/events/${event.id}" class="btn btn-primary calendar-event-btn">Se events</a>
+                        </article>
+                      `,
+                    )
+                    .join("")}
+                </div>
+              </section>
+            `;
+          })
+          .join("");
+      }
+
+      function setActiveRegion(region) {
+        regions.forEach((item) => {
+          item.classList.toggle("is-active", item.dataset.region === region);
+        });
+      }
+
+      function prettyRegionName(region) {
+        const labels = {
+          hovedstaden: "Hovedstaden",
+          sjaelland: "Sjælland",
+          fyn: "Fyn",
+          midtjylland: "Midtjylland",
+          nordjylland: "Nordjylland",
+          sydjylland: "Sydjylland",
+        };
+        return labels[region] || region;
+      }
+
+      regions.forEach((regionEl) => {
+        regionEl.addEventListener("click", () => {
+          const selectedRegion = regionEl.dataset.region;
+          const filtered = allEvents.filter((event) => event.region === selectedRegion);
+
+          regionTitle.textContent = prettyRegionName(selectedRegion);
+          setActiveRegion(selectedRegion);
+          renderEvents(filtered);
+        });
+      });
+
+      resetButton?.addEventListener("click", () => {
+        regionTitle.textContent = "Alle events";
+        setActiveRegion(null);
+        renderEvents(allEvents);
+      });
+
+      renderEvents(allEvents);
+
+      const toggle = document.querySelector(".menu-toggle");
+      const nav = document.querySelector("#main-nav");
+
+      if (toggle && nav) {
+        toggle.addEventListener("click", () => {
+          const isOpen = toggle.getAttribute("aria-expanded") === "true";
+          toggle.setAttribute("aria-expanded", String(!isOpen));
+          toggle.setAttribute("aria-label", isOpen ? "Åbn menu" : "Luk menu");
+          nav.classList.toggle("is-open");
+        });
+      }
+    </script>
+  </body>
+</html>

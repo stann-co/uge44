@@ -1,0 +1,105 @@
+---
+import "../pages/style/generel.css";
+import "../pages/style/layout.css";
+---
+
+<html lang="da">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Booking | UGE44</title>
+    <meta name="description" content="Book uge 44 og få et pressekit til din begivenhed." />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <div class="container header-inner">
+          <a href="/" class="logo" aria-label="Gå til forsiden">
+            <span class="logo-text">UGE<span class="logo-accent">44</span></span>
+          </a>
+
+          <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Åbn menu"> Menu </button>
+
+          <nav id="main-nav" class="main-nav" aria-label="Hovedmenu">
+            <a href="/booking" class="is-active">Booking</a>
+            <a href="/#om">Om</a>
+            <a href="/kalender">Kalender</a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="booking-page">
+        <section class="booking-hero">
+          <div class="container booking-intro">
+            <h1>Book uge 44</h1>
+            <p class="booking-subtitle">Få et pressekit til din begivenhed</p>
+          </div>
+        </section>
+
+        <section class="booking-content">
+          <div class="container booking-content-inner">
+            <div class="booking-image-wrap">
+              <img src="/public/images/booking.png" alt="billede af udstilling" class="booking-image" width="900" height="620" />
+
+              <div class="booking-text">
+                <p>Book dit pressekit til uge 44 og få adgang til alt det materiale, du har brug for — billeder, faktaark, baggrundsinformation og kontaktpersoner.</p>
+
+                <p>Udfyld formularen nedenfor, og vi sender dit kit direkte til din indbakke. Har du spørgsmål eller særlige behov, er du altid velkommen til at kontakte os.</p>
+              </div>
+
+              <section class="booking-form-section" aria-labelledby="form-heading">
+                <div class="booking-form-card">
+                  <h2 id="form-heading">Tilmeld dig her</h2>
+
+                  <form class="booking-form">
+                    <div class="form-group">
+                      <label for="email">Din mail</label>
+                      <input type="email" id="email" name="email" placeholder="" required />
+                    </div>
+
+                    <div class="form-group">
+                      <label for="event-info">Kort om dit event</label>
+                      <textarea id="event-info" name="event-info" rows="5" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-submit"> Tilmeld </button>
+                  </form>
+                </div>
+              </section>
+            </div>
+          </div>
+        </section>
+
+        <footer class="site-footer">
+          <div class="container footer-inner">
+            <a href="/" class="logo footer-logo" aria-label="Gå til forsiden">
+              <span class="logo-text">UGE<span class="logo-accent">44</span></span>
+            </a>
+
+            <nav class="footer-nav" aria-label="Footermenu">
+              <a href="/#om">Om kampagnen</a>
+              <a href="/booking">Booking</a>
+              <a href="/" aria-label="Facebook">Facebook</a>
+              <a href="/" aria-label="Instagram">Instagram</a>
+            </nav>
+          </div>
+        </footer>
+      </main>
+
+      <script>
+        const toggle = document.querySelector(".menu-toggle");
+        const nav = document.querySelector("#main-nav");
+
+        if (toggle && nav) {
+          toggle.addEventListener("click", () => {
+            const isOpen = toggle.getAttribute("aria-expanded") === "true";
+            toggle.setAttribute("aria-expanded", String(!isOpen));
+            toggle.setAttribute("aria-label", isOpen ? "Åbn menu" : "Luk menu");
+            nav.classList.toggle("is-open");
+          });
+        }
+      </script>
+    </div>
+  </body>
+</html>
