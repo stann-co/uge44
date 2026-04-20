@@ -1,11 +1,22 @@
 ---
-import "../pages/style/generel.css";
-import "../pages/style/layout.css";
-
-const { id } = Astro.params;
+import "../../pages/style/generel.css";
+import "../../pages/style/layout.css";
 
 const API_URL =
   "https://cbrvuyyzawexiapgwjsy.supabase.co/rest/v1/uge_44_begivenheder?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNicnZ1eXl6YXdleGlhcGd3anN5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzNDY2MzQsImV4cCI6MjA5MTkyMjYzNH0.HdxZ0uTaS1WBOktv6Y_rwMNxeGQLBjeFiUHsyLn1dBs";
+
+export async function getStaticPaths() {
+  const response = await fetch(
+    "https://cbrvuyyzawexiapgwjsy.supabase.co/rest/v1/uge_44_begivenheder?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNicnZ1eXl6YXdleGlhcGd3anN5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzNDY2MzQsImV4cCI6MjA5MTkyMjYzNH0.HdxZ0uTaS1WBOktv6Y_rwMNxeGQLBjeFiUHsyLn1dBs",
+  );
+  const events = await response.json();
+
+  return events.map((event) => ({
+    params: { id: String(event.id) },
+  }));
+}
+
+const { id } = Astro.params;
 
 let event = null;
 let relatedEvents = [];
