@@ -751,6 +751,53 @@
   display: block;
 }
 
+.calendar-map-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dk-map {
+  width: min(100%, 420px);
+  height: auto;
+}
+
+/* Regions */
+.map-region polygon {
+  fill: var(--color-secondary);
+  stroke: var(--color-primary);
+  stroke-width: 6;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+/* Hover */
+.map-region:hover polygon {
+  fill: var(--color-tertiary);
+  transform: scale(1.01);
+}
+
+/* Aktiv valgt region */
+.map-region.is-active polygon {
+  fill: var(--color-tertiary);
+}
+
+/* Smooth hover feel */
+.map-region {
+  transition: transform 0.2s ease;
+}
+
+.map-region:hover {
+  transform: scale(1.01);
+}
+
+/* Mobil */
+@media (max-width: 768px) {
+  .dk-map {
+    width: 100%;
+  }
+}
+
 @media (max-width: 768px) {
   .calendar-top-inner {
     grid-template-columns: 1fr;
