@@ -116,7 +116,7 @@
   flex-direction: column;
   pointer-events: none;
 
-  img{
+  img {
     width: 50%;
   }
 
@@ -124,7 +124,6 @@
     align-self: flex-start;
   }
   img:nth-child(2) {
-    
     flex-grow: 1;
   }
   img:nth-child(3) {
@@ -260,10 +259,6 @@
 }
 .logo-accent {
   color: var(--color-tertiary);
-}
-
-.main-nav a.is-active {
-  background: var(--color-tertiary);
 }
 
 .booking-page {
