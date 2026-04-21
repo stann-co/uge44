@@ -17,10 +17,6 @@ try {
     },
   });
 
-  if (!response.ok) {
-    throw new Error("Kunne ikke hente events");
-  }
-
   events = await response.json();
 } catch (error) {
   console.error(error);
@@ -48,6 +44,7 @@ const serializedEvents = JSON.stringify(events);
       <header class="site-header">
         <div class="container header-inner">
           <a href="/" class="logo" aria-label="Gå til forsiden">
+            <img src="public/images/u44logov1.svg" alt="UGE44 logo" class="logo-image" width="48" height="48" />
             <span class="logo-text">UGE<span class="logo-accent">44</span></span>
           </a>
 
@@ -279,6 +276,7 @@ const serializedEvents = JSON.stringify(events);
           const selectedRegion = regionEl.dataset.region;
 
           const filtered = allEvents.filter((event) => event.region === selectedRegion);
+          renderEvents(filtered);
 
           regionTitle.textContent = prettyRegionName(selectedRegion);
           setActiveRegion(selectedRegion);

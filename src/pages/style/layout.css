@@ -239,10 +239,6 @@
   color: var(--color-tertiary);
 }
 
-.main-nav a.is-active {
-  background: var(--color-tertiary);
-}
-
 .booking-page {
   background: var(--color-primary);
 }
@@ -762,7 +758,6 @@
   height: auto;
 }
 
-/* Regions */
 .map-region polygon {
   fill: var(--color-secondary);
   stroke: var(--color-primary);
@@ -771,18 +766,15 @@
   cursor: pointer;
 }
 
-/* Hover */
 .map-region:hover polygon {
   fill: var(--color-tertiary);
   transform: scale(1.01);
 }
 
-/* Aktiv valgt region */
 .map-region.is-active polygon {
   fill: var(--color-tertiary);
 }
 
-/* Smooth hover feel */
 .map-region {
   transition: transform 0.2s ease;
 }
@@ -791,7 +783,6 @@
   transform: scale(1.01);
 }
 
-/* Mobil */
 @media (max-width: 768px) {
   .dk-map {
     width: 100%;
