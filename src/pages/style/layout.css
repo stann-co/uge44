@@ -114,6 +114,7 @@
   z-index: 0;
   display: flex;
   flex-direction: column;
+  pointer-events: none;
 
   img{
     width: 50%;
